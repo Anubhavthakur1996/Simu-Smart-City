@@ -1,3 +1,4 @@
+import LinePlot from "../../helpers/graphs/LinePlot";
 import "./HomeUI.scss";
 
 type SplashUIProps = {
@@ -5,6 +6,7 @@ type SplashUIProps = {
   runSim: () => void;
   loading: boolean;
   response?: string | null;
+  data?: any;
 };
 
 const HomeUI: React.FC<SplashUIProps> = ({
@@ -12,6 +14,7 @@ const HomeUI: React.FC<SplashUIProps> = ({
   runSim,
   loading,
   response,
+  data,
 }) => {
   return (
     <div className="splash-container">
@@ -27,6 +30,8 @@ const HomeUI: React.FC<SplashUIProps> = ({
           value={JSON.stringify(response, null, 2)}
         />
       )}
+
+      <LinePlot data={data} />
     </div>
   );
 };

@@ -9,7 +9,7 @@ const Splash: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
       nav("/home");
-    }, 3000);
+    }, 1000);
   }, [nav]);
 
   const props = {

@@ -1,0 +1,6 @@
+location_id,location_name,parameter,value,unit,datetimeUtc,datetimeLocal,timezone,latitude,longitude,country_iso,isMobile,isMonitor,owner_name,provider
+233415,"Sector 22, Chandigarh - CPCC",relativehumidity,10.304888258566894,c,2025-03-02T08:09:36+0000,2025-03-02T13:38:24+0530,Asia/Kolkata,88.4733375,-85.358522,,,,Chandigarh Pollution Control Committee,CPCB
+233415,"Sector 22, Chandigarh - CPCC",temperature,9.678438688644901,%,2025-02-27T03:27:29+0000,2025-02-27T08:51:44+0530,Asia/Kolkata,89.1427315,74.60282,,,,Chandigarh Pollution Control Committee,CPCB
+233415,"Sector 22, Chandigarh - CPCC",wind_direction,148.1751033692357,µg/m³,2025-02-21T04:36:20+0000,2025-02-21T10:03:30+0530,Asia/Kolkata,-62.8812725,-172.146562,,,,Chandigarh Pollution Control Committee,CPCB
+233415,"Sector 22, Chandigarh - CPCC",nox,63.83460421032299,ppb,2025-02-27T03:54:05+0000,2025-02-27T09:22:01+0530,Asia/Kolkata,-49.063706,42.636131,,,,Chandigarh Pollution Control Committee,CPCB
+233415,"Sector 22, Chandigarh - CPCC",pm10,0.10787371408844487,µg/m³,2025-02-26T18:49:00+0000,2025-02-27T00:14:18+0530,Asia/Kolkata,23.0853575,55.5163,,,,Chandigarh Pollution Control Committee,CPCB
