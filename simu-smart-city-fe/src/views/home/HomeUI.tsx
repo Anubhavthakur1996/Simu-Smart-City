@@ -1,4 +1,6 @@
-import LinePlot from "../../helpers/graphs/LinePlot";
+import Config from "../../components/config";
+import LineChartComp from "../../helpers/graphs/LinehartComp";
+// import PieChartComp from "../../helpers/graphs/PieChartComp";
 import "./HomeUI.scss";
 
 type SplashUIProps = {
@@ -6,7 +8,7 @@ type SplashUIProps = {
   runSim: () => void;
   loading: boolean;
   response?: string | null;
-  data?: any;
+  data?: unknown[];
 };
 
 const HomeUI: React.FC<SplashUIProps> = ({
@@ -18,20 +20,40 @@ const HomeUI: React.FC<SplashUIProps> = ({
 }) => {
   return (
     <div className="splash-container">
-      <img className="logo" src={Logo} alt="Logo" />{" "}
-      <text className="splash-text">Simulating Smart Cities</text>
-      <button onClick={runSim} disabled={loading}>
-        {loading ? "Running Simulation..." : "Run Simulation"}
-      </button>
-      {response && (
-        <textarea
-          className="text-area"
-          readOnly
-          value={JSON.stringify(response, null, 2)}
-        />
-      )}
+      <div className="top-panel">
+        <img className="logo" src={Logo} alt="Logo" />{" "}
+        <text className="splash-text">Simulating Smart Cities</text>
+      </div>
+      <div className="panel-wrapper">
+        <div className="panel">
+          {data && (
+            <LineChartComp
+              data={data}
+              title="Baseline Emissions Based on Available Data (20 Samples)"
+            />
+          )}
 
-      <LinePlot data={data} />
+          {/* {data && <PieChartComp data={data} />} */}
+        </div>
+        <div className="panel">
+          <br />
+          <Config />
+          <br />
+          <button onClick={runSim} disabled={loading}>
+            {loading ? "Running Simulation..." : "Run Simulation"}
+          </button>
+        </div>
+      </div>
+      {response && (
+        <>
+          <h3>Simulation Response</h3>
+          <textarea
+            className="text-area"
+            readOnly
+            value={JSON.stringify(response, null, 2)}
+          />
+        </>
+      )}
     </div>
   );
 };

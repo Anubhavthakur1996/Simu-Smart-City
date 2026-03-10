@@ -1,6 +1,5 @@
 .splash-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   .splash-text {
     margin: 5% 0;
@@ -14,5 +13,26 @@
     height: 10vh;
     font-family: monospace;
     font-size: 1.2em;
+  }
+
+  .panel-wrapper {
+    display: flex;
+    width: 90vw;
+    justify-content: space-around;
+    align-items: center;
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .top-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

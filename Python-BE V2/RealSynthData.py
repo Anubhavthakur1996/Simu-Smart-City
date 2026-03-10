@@ -35,10 +35,18 @@ conditionalData = data[data['parameter'].isin(['no2', 'o3', 'pm10', 'pm2.5', 'so
 synthetic_data.to_csv(os.path.join(current_dir, "./data/synthetic_aqi.csv"), index=False)
 # data = pd.read_csv(os.path.join(current_dir, './data/openaq chd sec 22 (1-1-25 to 2-12-26).csv'))
 
+# convert parameter values to column
+# syntheti_data = synthetic_data.pivot_table(index='datetimeLocal', columns='parameter', values='value').reset_index()
+
+# remove null values
+# synthetic_data = synthetic_data.dropna(axis=1, how='all')  # drop columns with all null values
+
+# Get 100 random rows (or fewer if dataset is smaller)
+sample_df = conditionalData.sample(n=100, random_state=42)  # random_state for reproducibility
 
 # Save to JSON
-# synthetic_data.to_json("synthetic_aqi.json", orient="records")
-
+sample_df.to_json(os.path.join(current_dir, "./data/synthetic_aqi.json"), orient="records")
+  
 
 # plotting Graphs
 # Creating a multi-line plot to visualize variouse pollutants

@@ -1,0 +1,16 @@
+.input-group {
+  display: flex;
+  flex-direction: column;
+  // margin-bottom: 1rem;
+  width: 30vw;
+}
+
+.greyed {
+  background-color: #f0f0f0;
+  color: #999;
+  border: 1px solid #ccc;
+  width: 90%;
+  margin-top: -1rem;
+  align-self: center;
+  height: .5rem;
+}
