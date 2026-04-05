@@ -1,0 +1,13 @@
+.dashboard-wrapper,
+.charts-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  .charts-wrapper {
+    flex-direction: row;
+  }
+}

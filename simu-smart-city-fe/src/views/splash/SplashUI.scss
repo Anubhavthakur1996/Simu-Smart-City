@@ -8,4 +8,13 @@
     font-size: 4vw;
     color: var(--color-primary);
   }
+  .loading {
+    margin-top: 5%;
+    font-family: cursive;
+    font-size: 2vw;
+    color: var(--color-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

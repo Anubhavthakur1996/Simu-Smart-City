@@ -20,6 +20,7 @@
     width: 90vw;
     justify-content: space-around;
     align-items: center;
+    gap: 2rem;
 
     .panel {
       display: flex;
@@ -34,5 +35,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    .loading {
+      margin-top: 5%;
+      font-family: cursive;
+      font-size: 2vw;
+      color: var(--color-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }

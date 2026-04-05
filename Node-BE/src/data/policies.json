@@ -1,0 +1,6 @@
+{
+  "low_sulfur": { "so2": 0.2 },
+  "speed_normal": { "nox": 1.0, "co2": 1.0 },
+  "speed_eco": { "nox": 0.7, "co2": 1.1 },
+  "congestion_tax": { "behavior": "avoid_taxed_zones" }
+}
