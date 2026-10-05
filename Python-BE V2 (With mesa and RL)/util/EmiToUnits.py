@@ -33,3 +33,25 @@ def reporter_with_units(pollutant):
   return lambda m: m.pollution_levels[pollutant]
 
 
+# def convert_emission_to_unit(pollutant, delta_conc_ugm3, unit_from_data):
+#   """
+#   Convert emission concentration (µg/m³) into the unit provided by dataset.
+#   pollutant: str, e.g. 'nox'
+#   delta_conc_ugm3: float, concentration in µg/m³
+#   unit_from_data: str, e.g. 'ppb', 'ppm', 'µg/m³'
+#   """
+#   if unit_from_data.lower() in ["µg/m³", "ug/m3"]:
+#     return delta_conc_ugm3
+#   elif unit_from_data.lower() == "ppb":
+#     return (delta_conc_ugm3 * 24.45) / MW[pollutant]
+#   elif unit_from_data.lower() == "ppm":
+#     return ((delta_conc_ugm3 * 24.45) / MW[pollutant]) / 1000.0
+#   else:
+#     raise ValueError(f"Unknown unit for {pollutant}: {unit_from_data}")
+
+# def reporter_with_units(pollutant):
+#   """
+#   Returns a lambda that fetches pollutant value and unit together.
+#   """
+#   return lambda m: (m[pollutant], m[f"{pollutant}_unit"])
+

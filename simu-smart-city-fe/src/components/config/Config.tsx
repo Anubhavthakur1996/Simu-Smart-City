@@ -5,9 +5,15 @@ type ConfigProps = {
   loading: boolean;
   runSim: () => void;
   policies: any;
+  addNew: () => void;
 };
 
-const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
+const Config: React.FC<ConfigProps> = ({
+  loading,
+  runSim,
+  policies,
+  addNew,
+}) => {
   const [cycles, setCycles] = useState(3);
   const [agents, setAgents] = useState(5);
   const [config, setConfig] = useState({
@@ -51,7 +57,6 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
   return (
     <>
       <h2>Configuration</h2>
-
       {/* Vehicle Type */}
       {/* <div className="input-group">
         <h3>Vehicle Type</h3>
@@ -73,7 +78,6 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
           readOnly
         />
       </div> */}
-
       {/* Fuel Type */}
       <div className="input-group">
         <h3>Fuel Type</h3>
@@ -94,7 +98,6 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
           readOnly
         />
       </div>
-
       {/* Speed Control */}
       <div className="input-group">
         <h3>Speed Control</h3>
@@ -114,7 +117,6 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
           readOnly
         />
       </div>
-
       {/* Congestion Control */}
       <div className="input-group">
         <h3>Congestion Control</h3>
@@ -136,7 +138,6 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
           readOnly
         />
       </div>
-
       {/* Simulation Cycles */}
       <div className="input-group">
         <h3>Simulation Cycles (Steps taken by AI agents)</h3>
@@ -149,7 +150,6 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
         </select>
         <input className="greyed" type="text" value={cycles} readOnly />
       </div>
-
       {/* Number of AI Agents */}
       <div className="input-group">
         <h3>Number of Vehicles (Vehicle AI agents)</h3>
@@ -162,7 +162,6 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
         </select>
         <input className="greyed" type="text" value={agents} readOnly />
       </div>
-
       {/* Live JSON preview */}
       <h3>Payload Preview</h3>
       <pre>
@@ -180,6 +179,7 @@ const Config: React.FC<ConfigProps> = ({ loading, runSim, policies }) => {
       <button onClick={makePayload} disabled={loading}>
         {loading ? "Running Simulation..." : "Run Simulation"}
       </button>
+      {/* or<button onClick={addNew}>Add New Rule</button> */}
     </>
   );
 };

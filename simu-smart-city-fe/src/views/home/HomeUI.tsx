@@ -11,6 +11,7 @@ type SplashUIProps = {
   polData?: unknown[];
   emissionData?: unknown[];
   policies?: unknown[];
+  addNew: () => void;
 };
 
 const HomeUI: React.FC<SplashUIProps> = ({
@@ -20,6 +21,7 @@ const HomeUI: React.FC<SplashUIProps> = ({
   polData,
   emissionData,
   policies,
+  addNew,
 }) => {
   return (
     <div className="splash-container">
@@ -57,7 +59,12 @@ const HomeUI: React.FC<SplashUIProps> = ({
             </div>
             <div className="panel">
               <br />
-              <Config loading={loading} runSim={runSim} policies={policies} />
+              <Config
+                loading={loading}
+                runSim={runSim}
+                policies={policies}
+                addNew={addNew}
+              />
             </div>
           </div>
         </>

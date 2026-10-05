@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 
-import HomeUI from "./HomeUI";
+import NewRuleUI from "./NewRuleUI";
+
 import Logo from "../../assets/logo.png";
 import { runSimulation } from "../../API/simulation";
 import {
@@ -12,9 +13,14 @@ import {
   setResults,
 } from "../../redux/slices/dataSlice";
 
-const Home: React.FC = () => {
+const NewRule: React.FC = () => {
   const nav = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [rules, setRules] = useState({
+    ft: {},
+    sc: {},
+    cr: {},
+  });
 
   const { polData, emissionData, policies } = useSelector(
     (state: any) => state.data,
@@ -38,6 +44,10 @@ const Home: React.FC = () => {
     }
   }, [dispatch, polData, emissionData]);
 
+  const ruleNewBuilder = (key, pair) => {
+    const obj = rules[key][pair]
+  };
+
   const runSim = (config) => {
     setLoading(true);
 
@@ -51,8 +61,9 @@ const Home: React.FC = () => {
       .then((res) => {
         sessionStorage.setItem("results", JSON.stringify(res.result));
         dispatch(setResults(res.result));
-        nav("/result-dashboard");
         setLoading(false);
+
+        nav("/result-dashboard");
       })
       .catch(() => {
         alert("Something went wrong while fetching data!");
@@ -71,7 +82,7 @@ const Home: React.FC = () => {
     emissionData,
     addNew,
   };
-  return <HomeUI {...props} />;
+  return <NewRuleUI {...props} />;
 };
 
-export default Home;
+export default NewRule;

@@ -6,13 +6,23 @@ import { setResults } from "../../redux/slices/dataSlice";
 import type { DashboardUIProps } from "../../types";
 
 const COLORS = {
-  pm25: "#8884d8",
-  nox: "#82ca9d",
-  so2: "#ffc658",
-  co: "#ff7f50",
-  pm10: "#8dd1e1",
-  baseline: "#8884d8",
-  policies: "#82ca9d",
+  pm25: "#8884d8", // soft purple
+  pm25_pol: "#6a0dad", // deep violet
+
+  nox: "#82ca9d", // green
+  nox_pol: "#2e8b57", // sea green
+
+  so2: "#ffc658", // yellow
+  so2_pol: "#ff8c00", // dark orange
+
+  co: "#ff7f50", // coral
+  co_pol: "#b22222", // firebrick red
+
+  pm10: "#8dd1e1", // teal
+  pm10_pol: "#008080", // dark teal
+
+  baseline: "#1e90ff", // dodger blue
+  policies: "#ff4500", // orange-red
 };
 
 const smallCardStyle = {
@@ -97,7 +107,7 @@ const Dashboard = () => {
     return out;
   }, [regularWithCycle, polWithCycle]);
 
-  // Bar chart dataset: focus counts per cycle (baseline vs policies)
+  // Bar chart dataset - focus counts per cycle (baseline vs policies)
   const focusCombined = useMemo(() => {
     const maxLen = Math.max(regularWithCycle.length, polWithCycle.length);
     const out = [];
@@ -115,7 +125,7 @@ const Dashboard = () => {
     return out;
   }, [regularWithCycle, polWithCycle]);
 
-  // Scatter results: convert agent positions to {x, y}
+  // Scatter results - convert agent positions to {x, y}
   const scatterBase = agentsBase
     .map((a, idx) => {
       if (!a?.position) return null;
@@ -140,37 +150,79 @@ const Dashboard = () => {
     })
     .filter(Boolean);
 
-  // Radar chart: aggregate moves/reroutes/stops and avg_reward for baseline & policies
+  // Radar chart - aggregate moves/reroutes/stops and avg_reward for baseline & policies
+
+  // For regular raw data
+  // const radarData = useMemo(() => {
+  //   const sum = (arr, key) => arr.reduce((s, it) => s + (it?.[key] ?? 0), 0);
+  //   const avg = (arr, key) => (arr.length ? sum(arr, key) / arr.length : 0);
+
+  //   const baseline = {
+  //     moves: avg(regularWithCycle, "moves"),
+  //     reroutes: avg(regularWithCycle, "reroutes"),
+  //     stops: avg(regularWithCycle, "stops"),
+  //     avg_reward: avg(regularWithCycle, "avg_reward"),
+  //   };
+  //   const policies = {
+  //     moves: avg(polWithCycle, "moves"),
+  //     reroutes: avg(polWithCycle, "reroutes"),
+  //     stops: avg(polWithCycle, "stops"),
+  //     avg_reward: avg(polWithCycle, "avg_reward"),
+  //   };
+
+  //   return [
+  //     { metric: "moves", baseline: baseline.moves, policies: policies.moves },
+  //     {
+  //       metric: "reroutes",
+  //       baseline: baseline.reroutes,
+  //       policies: policies.reroutes,
+  //     },
+  //     { metric: "stops", baseline: baseline.stops, policies: policies.stops },
+  //     {
+  //       metric: "avg_reward",
+  //       baseline: baseline.avg_reward,
+  //       policies: policies.avg_reward,
+  //     },
+  //   ];
+  // }, [regularWithCycle, polWithCycle]);
+
+  // To also normalize data
   const radarData = useMemo(() => {
     const sum = (arr, key) => arr.reduce((s, it) => s + (it?.[key] ?? 0), 0);
     const avg = (arr, key) => (arr.length ? sum(arr, key) / arr.length : 0);
 
-    const baseline = {
+    const bRaw = {
       moves: avg(regularWithCycle, "moves"),
       reroutes: avg(regularWithCycle, "reroutes"),
       stops: avg(regularWithCycle, "stops"),
       avg_reward: avg(regularWithCycle, "avg_reward"),
     };
-    const policies = {
+    const pRaw = {
       moves: avg(polWithCycle, "moves"),
       reroutes: avg(polWithCycle, "reroutes"),
       stops: avg(polWithCycle, "stops"),
       avg_reward: avg(polWithCycle, "avg_reward"),
     };
 
+    // Helper to normalize values out of 100 so different metrics share the chart proportionally
+    const createMetricRow = (rawKey, cleanLabel) => {
+      const maxVal = Math.max(bRaw[rawKey], pRaw[rawKey]) || 1;
+      return {
+        metric: cleanLabel,
+        // Scales values into clean percentages so they fit on the same web view
+        baseline: Math.round((bRaw[rawKey] / maxVal) * 100),
+        policies: Math.round((pRaw[rawKey] / maxVal) * 100),
+        // Keeps raw numbers accessible so your Tooltip can still display them!
+        rawBaseline: bRaw[rawKey].toFixed(1),
+        rawPolicies: pRaw[rawKey].toFixed(1),
+      };
+    };
+
     return [
-      { metric: "moves", baseline: baseline.moves, policies: policies.moves },
-      {
-        metric: "reroutes",
-        baseline: baseline.reroutes,
-        policies: policies.reroutes,
-      },
-      { metric: "stops", baseline: baseline.stops, policies: policies.stops },
-      {
-        metric: "avg_reward",
-        baseline: baseline.avg_reward,
-        policies: policies.avg_reward,
-      },
+      createMetricRow("moves", "Vehicle Moves"),
+      createMetricRow("reroutes", "Reroutes Triggered"),
+      createMetricRow("stops", "Grid Stops"),
+      createMetricRow("avg_reward", "Average Reward"),
     ];
   }, [regularWithCycle, polWithCycle]);
 
@@ -186,7 +238,7 @@ const Dashboard = () => {
     };
 
     // Pollutant substrings we care about
-    const pollutantKeys = ["co", "nox", "so2", "pm10", "pm25"];
+    const pollutantKeys = ["co_", "nox_", "so2_", "pm10_", "pm25_"]; //Added trailing _ to not match wrong keys e.g. co with congestion
 
     const result: Record<string, number | null> = {};
 

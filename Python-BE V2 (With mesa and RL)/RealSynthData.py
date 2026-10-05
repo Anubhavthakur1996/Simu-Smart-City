@@ -9,7 +9,7 @@ data = pd.read_csv(os.path.join(current_dir, './data/openaq chd sec 22 (1-1-25 t
 
 
 def validateSyntheticData(real, synthetic):
-  for col in ['pm25','pm10','nox','so2','co']:  # adjust to your pollutants
+  for col in ['pm25','pm10','nox','so2','co']:  # adjust to pollutants
     fig = px.histogram(
       pd.concat([
         real[[col]].assign(dataset="real"),
@@ -49,7 +49,17 @@ def generateSyntheticData():
   # validateSyntheticData(conditionalData, (synthetic_data[synthetic_data['parameter'].isin(['nox', 'co2', 'co', 'pm10', 'pm25', 'so2'])]))
 
   # convert parameter column values to column
-  conv_data = conditionalData.pivot_table(index="datetimeUtc", columns='parameter', values='value').reset_index()
+  # conv_data = conditionalData.pivot_table(index="datetimeUtc", columns='parameter', values='value').reset_index()
+
+  # Pivot values
+  conv_values = conditionalData.pivot_table(index="datetimeUtc", columns='parameter', values='value').reset_index()
+
+  # Pivot units
+  conv_units = conditionalData.pivot_table(index="datetimeUtc", columns='parameter', values='unit', aggfunc='first').reset_index()
+
+  # Merge them
+  conv_data = conv_values.merge(conv_units, on="datetimeUtc", suffixes=("", "_unit"))
+
 
   # Save synthetic data to CSV
   # synthetic_data.to_csv(os.path.join(current_dir, "./data/synthetic_aqi.csv"), index=False)

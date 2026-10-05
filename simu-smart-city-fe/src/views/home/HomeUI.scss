@@ -19,13 +19,13 @@
     display: flex;
     width: 90vw;
     justify-content: space-around;
-    align-items: center;
+    // align-items: center;
     gap: 2rem;
 
     .panel {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      // justify-content: center;
       align-items: center;
     }
   }
