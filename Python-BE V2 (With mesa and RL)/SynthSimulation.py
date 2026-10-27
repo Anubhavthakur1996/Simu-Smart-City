@@ -14,13 +14,22 @@ from .util.EmiToUnits import convert_emission_to_unit, UNIT_SCHEMA, reporter_wit
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-synthetic_data = pd.read_csv(os.path.join(current_dir, "./data/synthetic_aqi.csv"))
+# synthetic_data = pd.read_csv(os.path.join(current_dir, "./data/synthetic_aqi.csv"))
+synthetic_data = pd.read_csv(os.path.join(current_dir, "./data/openaq chd sec 22 (1-1-25 to 2-12-26).csv"))
 
 # only numeric columns contribute to the baseline
 # numeric = synthetic_data.select_dtypes(include=[np.number])
 # baseline_pollution = numeric.mean().to_dict()
-baseline_pollution = synthetic_data[synthetic_data['parameter']
-                                  .isin(['nox', 'co', 'pm10', 'pm25', 'so2'])].groupby('parameter')['value'].mean().to_dict()
+
+# Commenting following because it seems thart the NOx in the dataset is wrong as the mean of NO + NO2 seems to be smaller than respected NOx
+# baseline_pollution = synthetic_data[synthetic_data['parameter']
+#                                  .isin(['nox', 'co', 'pm10', 'pm25', 'so2'])].groupby('parameter')['value'].mean().to_dict()
+
+_means = synthetic_data[synthetic_data['parameter']
+         .isin(['co', 'pm10', 'pm25', 'so2', 'no', 'no2'])].groupby('parameter')['value'].mean()
+
+baseline_pollution = _means[['co', 'pm10', 'pm25', 'so2']].to_dict()
+baseline_pollution['nox'] = float(_means['no'] + _means['no2'])
 
 # Emission data
 with open(os.path.join(current_dir, "./data/emission_data.json"), "r") as f:
